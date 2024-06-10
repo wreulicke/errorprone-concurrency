@@ -29,7 +29,9 @@ class DoNotDependDefaultThreadFactoryTest {
                     public Thread newThread(Runnable r) {
                         Thread t = new Thread(r);
                         t.setName(String.format("test-%d", counter.incrementAndGet()));
-                        t.setUncaughtExceptionHandler((t1, e) -> {});
+                        t.setUncaughtExceptionHandler((t1, e) -> {
+                          // should write log
+                        });
                         return t;
                     }
                 };

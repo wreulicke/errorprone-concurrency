@@ -23,8 +23,10 @@ dependencies {
 ## Rules
 
 - [DoNotDependDefaultExecutor](#donotdependdefaultexecutor)
+- [DoNotDependDefaultThreadFactory](#donotdependdefaultthreadfactory)
 - [ShouldRestrictThreadPoolSize](#shouldrestrictthreadpoolsize)
 - [ShouldUseThreadFactory](#shouldusethreadfactory)
+- [ShouldSetExecutorJavaNetHttpClinet](#shouldsetexecutorjavanethttpclient)
 
 ### DoNotDependDefaultExecutor
 
@@ -51,6 +53,46 @@ class Test {
   }
 }
 ```
+
+### DoNotDependDefaultThreadFactory
+
+DoNotDependDefaultThreadFactory rule prevents using default thread factory.
+Default thread factory provides common thread name. But, it is not useful for debugging.
+It is recommended to use custom thread factory.
+
+```java
+import java.util.concurrent.ThreadFactory;
+class Test {
+  void test() {
+    ThreadFactory tf = new ThreadFactory() {
+      private final AtomicInteger counter = new AtomicInteger();
+      public Thread newThread(Runnable r) {
+        Thread t = new Thread(r);
+        t.setName(String.format("test-%d", counter.incrementAndGet()));
+        t.setUncaughtExceptionHandler((t1, e) -> {
+          // should write log
+        });
+        return t;
+      }
+    };
+    
+    // valid
+    Executors.newFixedThreadPool(20, tf);
+    // valid
+    Executors.newCachedThreadPool(tf);
+    // valid
+    Executors.newSingleThreadExecutor(tf);
+
+    // invalid: next line use default thread factory implicitly
+    Executors.newFixedThreadPool(20);
+    // invalid: next line use default thread factory implicitly
+    Executors.newCachedThreadPool();
+    // invalid: next line use default thread factory implicitly
+    Executors.newSingleThreadExecutor();
+  }
+}
+```
+
 
 ### ShouldRestrictThreadPoolSize
 
@@ -144,6 +186,23 @@ class Test {
 }
 ```
 
+### ShouldSetExecutorJavaNetHttpClinet
+
+ShouldSetExecutorJavaNetHttpClinet rule prevents using default executor for `java.net.HttpClient`.
+
+```java
+import java.net.http.HttpClient;
+
+class Test {
+  void test(ThreadFactory tf) {
+    // valid
+    HttpClient.newBuilder().executor(Executors.newFixedThreadPool(20, tf)).build();
+
+    // invalid: next line use default executor implicitly
+    HttpClient.newHttpClient();
+  }
+}
+```
 ## License
 
 MIT License
