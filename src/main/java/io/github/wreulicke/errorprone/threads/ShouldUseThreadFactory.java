@@ -16,7 +16,7 @@ import com.sun.source.util.TreePath;
     summary =
         "Do not use new Thread() directly. Use ThreadFactory instead, setting the thread name and uncaught exception handler.",
     severity = BugPattern.SeverityLevel.ERROR,
-    link = "github.com/wreulicke/errorprone-futures",
+    link = "github.com/wreulicke/errorprone-concurrency",
     linkType = BugPattern.LinkType.CUSTOM)
 public class ShouldUseThreadFactory extends BugChecker implements BugChecker.NewClassTreeMatcher {
 

@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
 @BugPattern(
     summary = "Do not depend default executor for IO-bound tasks. Use dedicated executor instead.",
     severity = BugPattern.SeverityLevel.ERROR,
-    link = "github.com/wreulicke/errorprone-futures",
+    link = "github.com/wreulicke/errorprone-concurrency",
     linkType = BugPattern.LinkType.CUSTOM)
 public class DoNotDependDefaultExecutor extends BugChecker
     implements BugChecker.MethodInvocationTreeMatcher {
@@ -47,7 +47,9 @@ public class DoNotDependDefaultExecutor extends BugChecker
               "completeAsync");
 
   private static final Matcher<ExpressionTree> IS_EXECUTOR =
-      Matchers.allOf(Matchers.not(Matchers.nullLiteral()), Matchers.isSubtypeOf("java.util.concurrent.Executor"));
+      Matchers.allOf(
+          Matchers.not(Matchers.nullLiteral()),
+          Matchers.isSubtypeOf("java.util.concurrent.Executor"));
 
   @Override
   public Description matchMethodInvocation(MethodInvocationTree tree, VisitorState state) {

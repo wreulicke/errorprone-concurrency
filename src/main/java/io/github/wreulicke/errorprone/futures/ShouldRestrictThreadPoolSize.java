@@ -15,7 +15,7 @@ import com.sun.source.tree.MethodInvocationTree;
     summary =
         "Do not use newCachedThreadPool. It is unbounded and can cause OOM. Use newFixedThreadPool instead.",
     severity = BugPattern.SeverityLevel.ERROR,
-    link = "github.com/wreulicke/errorprone-futures",
+    link = "github.com/wreulicke/errorprone-concurrency",
     linkType = BugPattern.LinkType.CUSTOM)
 public class ShouldRestrictThreadPoolSize extends BugChecker
     implements BugChecker.MethodInvocationTreeMatcher {

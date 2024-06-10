@@ -1,6 +1,5 @@
 package io.github.wreulicke.errorprone.futures;
 
-
 import com.google.errorprone.CompilationTestHelper;
 import org.junit.jupiter.api.Test;
 
@@ -19,9 +18,9 @@ class DoNotDependDefaultExecutorTest {
                 void testValid() {
                     Executor e = Executors.newFixedThreadPool(20);
                     CompletableFuture.runAsync(() -> {}, e);
-                    
+
                     CompletableFuture.supplyAsync(() -> 1, e);
-                    
+
                     var f = CompletableFuture.completedFuture(1);
                     f.thenApplyAsync(i -> i, e);
                     f.thenAcceptAsync(i -> {}, e);
@@ -57,10 +56,10 @@ class DoNotDependDefaultExecutorTest {
                 void test() {
                     // BUG: Diagnostic contains: Do not depend default executor for IO-bound tasks. Use dedicated executor instead.
                     CompletableFuture.runAsync(() -> {});
-                    
+
                     // BUG: Diagnostic contains: Do not depend default executor for IO-bound tasks. Use dedicated executor instead.
                     CompletableFuture.supplyAsync(() -> 1);
-                    
+
                     var f = CompletableFuture.completedFuture(1);
                     // BUG: Diagnostic contains: Do not depend default executor for IO-bound tasks. Use dedicated executor instead.
                     f.thenApplyAsync(i -> i);
@@ -97,5 +96,4 @@ class DoNotDependDefaultExecutorTest {
             """)
         .doTest();
   }
-
 }
