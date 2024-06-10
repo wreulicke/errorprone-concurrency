@@ -49,7 +49,7 @@ public class ShouldSetExecutorJavaNetHttpClient extends BugChecker
     while (t instanceof MethodInvocationTree) {
       t = ASTHelpers.getReceiver(t);
       if (t instanceof MethodInvocationTree m) {
-        if (Matchers.methodInvocation(SET_EXECUTOR).matches(m, state)) {
+        if (SET_EXECUTOR.matches(m, state)) {
           return Description.NO_MATCH;
         }
       }
