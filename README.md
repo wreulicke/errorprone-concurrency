@@ -37,6 +37,8 @@ Tasks can get stuck.
 ```java
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.CompletableFuture;
 
 class Test {
   void test() {
@@ -62,6 +64,10 @@ It is recommended to use custom thread factory.
 
 ```java
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Executor;
+import java.util.concurrent.atomic.AtomicInteger;
+
 class Test {
   void test() {
     ThreadFactory tf = new ThreadFactory() {
@@ -120,6 +126,8 @@ ShouldUseThreadFactory rule prevents using Thread without thread name and uncaug
 
 ```java
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 class Test {
   void test() {
