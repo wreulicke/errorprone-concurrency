@@ -7,13 +7,9 @@ import com.google.errorprone.bugpatterns.BugChecker;
 import com.google.errorprone.matchers.Description;
 import com.google.errorprone.matchers.Matcher;
 import com.google.errorprone.matchers.Matchers;
-import com.google.errorprone.suppliers.Supplier;
-import com.google.errorprone.util.ASTHelpers;
 import com.sun.source.tree.ExpressionTree;
 import com.sun.source.tree.MethodInvocationTree;
 import com.sun.source.tree.NewClassTree;
-import com.sun.tools.javac.code.Type;
-import com.sun.tools.javac.code.Types;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -44,9 +40,6 @@ public class DoNotDependDefaultThreadFactory extends BugChecker
 
   private static final Matcher<ExpressionTree> IS_THREAD_FACTORY =
       Matchers.isSubtypeOf("java.util.concurrent.ThreadFactory");
-  private static final Supplier<Type> EXECUTOR_SERVICE =
-      VisitorState.memoize(
-          state -> state.getTypeFromString("java.util.concurrent.ExecutorService"));
 
   @Override
   public Description matchMethodInvocation(MethodInvocationTree tree, VisitorState state) {
@@ -54,15 +47,6 @@ public class DoNotDependDefaultThreadFactory extends BugChecker
       return describeMatch(tree);
     }
     if (!IS_EXECUTORS_STATIC_METHODS.matches(tree, state)) {
-      return Description.NO_MATCH;
-    }
-
-    Type type = ASTHelpers.getReturnType(tree);
-    if (type == null) {
-      return Description.NO_MATCH;
-    }
-    Types types = state.getTypes();
-    if (!types.isAssignable(type, EXECUTOR_SERVICE.get(state))) {
       return Description.NO_MATCH;
     }
 
