@@ -133,4 +133,21 @@ class ShouldUseThreadFactoryTest {
             """)
         .doTest();
   }
+
+  @Test
+  void testField() {
+    CompilationTestHelper compilationHelper =
+        CompilationTestHelper.newInstance(ShouldUseThreadFactory.class, getClass());
+    compilationHelper
+        .addSourceLines(
+            "Test.java",
+            """
+            import java.util.concurrent.ThreadFactory;
+            class Test {
+                // BUG: Diagnostic contains: Do not use new Thread() directly. Use ThreadFactory instead, setting the thread name and uncaught exception handler.
+                private final Thread thread = new Thread();
+            }
+            """)
+        .doTest();
+  }
 }
