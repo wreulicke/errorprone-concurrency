@@ -36,7 +36,9 @@ public class DoNotDependDefaultThreadFactory extends BugChecker
           .named("defaultThreadFactory");
 
   private static final Matcher<ExpressionTree> IS_THREAD_POOL_EXECUTOR =
-      Matchers.constructor().forClass("java.util.concurrent.ThreadPoolExecutor");
+      Matchers.anyOf(
+          Matchers.constructor().forClass("java.util.concurrent.ThreadPoolExecutor"),
+          Matchers.constructor().forClass("java.util.concurrent.ScheduledThreadPoolExecutor"));
 
   private static final Matcher<ExpressionTree> IS_THREAD_FACTORY =
       Matchers.isSubtypeOf("java.util.concurrent.ThreadFactory");

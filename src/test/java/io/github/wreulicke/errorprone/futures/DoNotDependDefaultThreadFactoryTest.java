@@ -1,7 +1,5 @@
 package io.github.wreulicke.errorprone.futures;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.google.errorprone.CompilationTestHelper;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +19,7 @@ class DoNotDependDefaultThreadFactoryTest {
         import java.util.concurrent.ThreadPoolExecutor;
         import java.util.concurrent.TimeUnit;
         import java.util.concurrent.LinkedBlockingQueue;
+        import java.util.concurrent.ScheduledThreadPoolExecutor;
 
         class Test {
             void test() {
@@ -47,6 +46,8 @@ class DoNotDependDefaultThreadFactoryTest {
                 Executors.newWorkStealingPool();
 
                 new ThreadPoolExecutor(10, 10, 0, TimeUnit.SECONDS, new LinkedBlockingQueue<>(), f);
+
+                new ScheduledThreadPoolExecutor(10, f);
             }
         }
         """)
@@ -66,6 +67,7 @@ class DoNotDependDefaultThreadFactoryTest {
         import java.util.concurrent.ThreadPoolExecutor;
         import java.util.concurrent.TimeUnit;
         import java.util.concurrent.LinkedBlockingQueue;
+        import java.util.concurrent.ScheduledThreadPoolExecutor;
 
         class Test {
             void test() {
@@ -86,6 +88,9 @@ class DoNotDependDefaultThreadFactoryTest {
 
                 // BUG: Diagnostic contains: Do not depend on the default thread factory. It is recommended to use a custom thread factory instead for tracing the thread creation.
                 new ThreadPoolExecutor(10, 10, 0, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+
+                // BUG: Diagnostic contains: Do not depend on the default thread factory. It is recommended to use a custom thread factory instead for tracing the thread creation.
+                new ScheduledThreadPoolExecutor(10);
             }
         }
         """)
