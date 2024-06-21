@@ -4,8 +4,6 @@ This is a collection of custom errorprone checks for Concurrency and Threads.
 
 ## Install
 
-TODO: release
-
 ### Maven
 
 TBD
@@ -14,9 +12,9 @@ TBD
 
 ```ruby
 dependencies {
-  annotationProcessor 'io.github.wreulicke:errorprone-concurrency:0.0.1'
+  annotationProcessor 'io.github.wreulicke:errorprone-concurrency:0.0.3'
   # or you can write below when you use net.ltgt.errorprone plugin
-  errorprone 'io.github.wreulicke:errorprone-concurrency:0.0.1'
+  errorprone 'io.github.wreulicke:errorprone-concurrency:0.0.3'
 }
 ```
 
