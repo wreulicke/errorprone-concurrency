@@ -1,4 +1,4 @@
-# errorprone-futures
+# errorprone-concurrency
 
 This is a collection of custom errorprone checks for Concurrency and Threads.
 
