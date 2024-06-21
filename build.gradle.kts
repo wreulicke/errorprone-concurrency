@@ -117,13 +117,13 @@ publishing {
         register<MavenPublication>("maven") {
             pom {
                 name.set(project.name)
-                description.set("Custom Errorprone check for import-control")
-                url.set("https://github.com/wreulicke/errorprone-import-control")
+                description.set("Custom Errorprone check for concurrency")
+                url.set("https://github.com/wreulicke/errorprone-concurrency")
 
                 licenses {
                     license {
                         name.set("MIT License")
-                        url.set("https://github.com/wreulicke/errorprone-import-control/blob/master/LICENSE")
+                        url.set("https://github.com/wreulicke/errorprone-concurrency/blob/master/LICENSE")
                         distribution.set("repo")
                     }
                 }
@@ -135,13 +135,13 @@ publishing {
                     }
                 }
                 scm {
-                    connection.set("scm:git:git@github.com:wreulicke/errorprone-import-control.git")
-                    developerConnection.set("scm:git:git@github.com:wreulicke/errorprone-import-control.git")
-                    url.set("https://github.com/wreulicke/errorprone-import-control")
+                    connection.set("scm:git:git@github.com:wreulicke/errorprone-concurrency.git")
+                    developerConnection.set("scm:git:git@github.com:wreulicke/errorprone-concurrency.git")
+                    url.set("https://github.com/wreulicke/errorprone-concurrency")
                 }
                 issueManagement {
                     system.set("GitHub Issues")
-                    url.set("https://github.com/wreulicke/errorprone-import-control/issues")
+                    url.set("https://github.com/wreulicke/errorprone-concurrency/issues")
                 }
             }
         }
