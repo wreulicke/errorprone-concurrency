@@ -150,7 +150,7 @@ publishing {
 
 tasks.named<SonatypeCentralUploadTask>("sonatypeCentralUpload") {
     // 公開するファイルを生成するタスクに依存する。
-    dependsOn("shadowJar", "sourcesJar", "javadocJar", "generatePomFileForMavenPublication")
+    dependsOn("jar", "sourcesJar", "javadocJar", "generatePomFileForMavenPublication")
 
     // Central Portalで生成したトークンを指定する。
     username = System.getenv("SONATYPE_CENTRAL_USERNAME")
